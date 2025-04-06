@@ -106,12 +106,33 @@ After running the program:
 
 ---
 
-## 📌 Notes
+## 🧮 How Ranking Works (Using HashMap)
 
-- Max word length supported: **50 characters**.
-- Max prefix length: **20 characters**.
-- Supports up to **100,000 words**.
-- Words are case-sensitive (e.g., `Hello` ≠ `hello`).
+To track how often each word is used or searched, we use a `HashMap<String, Integer>` where:
+
+- **Key** = the word (e.g., `"hello"`)
+- **Value** = the rank or frequency (e.g., `5` means it has been searched 5 times)
+
+### ✅ Why HashMap?
+- 💡 **Fast Lookup**: Retrieving or updating the rank of a word is done in constant time — **O(1)**.
+- 🧱 **Simple to Implement**: Works well alongside the Trie structure for ranking logic.
+- 🔄 **Dynamic Updates**: Easily increment the rank each time a word is used or manually increased.
+
+### 🧪 Example:
+```java
+HashMap<String, Integer> wordRanks = new HashMap<>();
+
+// When loading words
+wordRanks.put("hello", 0);  // default rank
+
+// When a word is searched or used
+wordRanks.put("hello", wordRanks.get("hello") + 1);  // increment rank
+```
+
+### 🔍 During Auto-complete:
+- We collect all words matching the prefix from the Trie.
+- For each word, we fetch its rank from the HashMap.
+- Then, we **sort all suggestions by rank (descending)** to show the most relevant results first.
 
 ---
 
